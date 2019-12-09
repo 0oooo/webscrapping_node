@@ -45,33 +45,9 @@ router.get('/', function(request, response, next) {
         data: query_result                    // current result
       });
     });
-
-
   });
 });
 
-/* GET movie listing. (GET All movies) */
-router.get('/total', function(request, response, next) {
-  let today = request.query.today;
-  let count = "SELECT COUNT(id) as total FROM movie ";
-
-  if(today){
-    count += " WHERE id IN (SELECT movie_id FROM screening WHERE Date(screening_datetime) = '" + date() + "') ";
-  }
-
-  db.query(count, function (err, result) {
-    if (err){
-      response.status(HTTP_STATUS.INTERNAL_SERVER_ERROR);
-      response.json({'error': true, 'message': + err});
-      // return;
-      next();
-    }
-
-    response.json({
-      data: result
-    });
-  });
-});
 
 /* GET movie by id. (GET specific movie) */
 router.get('/:id', function(request, response, next) {

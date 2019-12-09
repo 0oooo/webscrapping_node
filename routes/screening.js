@@ -54,8 +54,8 @@ router.get('/:id', function(request, response, next) {
 router.get('/', function(request, response, next) {
   let page = request.query.page;
   let limit = request.query.limit;
-  let movieid = request.params.movie;
-  let sql = "SELECT * FROM screening WHERE movie_id = " + movieid;
+  let movie_id = request.query.movie;
+  let sql = "SELECT * FROM screening WHERE movie_id = " + movie_id;
 
   if(limit !== undefined && page !== undefined ){
     sql += "ORDER BY id LIMIT " + limit + " OFFSET " + --page * limit;
@@ -78,12 +78,12 @@ router.get('/', function(request, response, next) {
 });
 
 
-/* GET screening by movie date. (GET specific screening) */
+/* GET screening by date. (GET specific screening) */
 router.get('/', function(request, response, next) {
   let page = request.query.page;
   let limit = request.query.limit;
-  let date = request.params.screeningDate;
-  let sql = "SELECT * FROM screening WHERE screening_datetime = " + movieid;
+  let date = request.query.screeningDate;
+  let sql = "SELECT * FROM screening WHERE DATE(screening_datetime) = " + date;
 
   if(limit !== undefined && page !== undefined ){
     sql += "ORDER BY id LIMIT " + limit + " OFFSET " + --page * limit;
@@ -104,5 +104,6 @@ router.get('/', function(request, response, next) {
   });
 
 });
+
 
 module.exports = router;
