@@ -3,22 +3,28 @@ require('../http-status');
 let router = express.Router();
 let db = require('../database');
 
-/* GET screening listing. (GET All screenings) */
+/* GET screening by movie id. and company (GET specific screening) */
 router.get('/', function(request, response, next) {
   let page = request.query.page;
   let limit = request.query.limit;
+  let movie = request.query.movie;
+  let company = request.query.company;
 
-  let sql = "SELECT * FROM screening ";
+  let sql = "SELECT * FROM screening s, cinema c ";
+
+  if(movie !== undefined && company !== undefined){
+    sql += "WHERE s.cinema_id = c.id AND movie_id = " + movie
+        + " AND c.company_name = '" + company + "' ";
+  }
 
   if(limit !== undefined && page !== undefined ){
-    sql += "ORDER BY id LIMIT " + limit + " OFFSET " + --page * limit;
+    sql += "ORDER BY s.id LIMIT " + limit + " OFFSET " + --page * limit;
   }
 
   db.query(sql, function (err, result) {
     if (err){
       response.status(HTTP_STATUS.INTERNAL_SERVER_ERROR);
       response.json({'error': true, 'message': + err});
-      // return;
       next();
     }
 
@@ -27,7 +33,10 @@ router.get('/', function(request, response, next) {
       data: result
     });
   });
+
 });
+
+
 
 /* GET screening by id. (GET specific screening) */
 router.get('/:id', function(request, response, next) {
@@ -38,7 +47,6 @@ router.get('/:id', function(request, response, next) {
     if (err){
       response.status(HTTP_STATUS.INTERNAL_SERVER_ERROR);
       response.json({'error': true, 'message': + err});
-      // return;
       next();
     }
 
@@ -49,54 +57,28 @@ router.get('/:id', function(request, response, next) {
   });
 
 });
-
-/* GET screening by movie id. (GET specific screening) */
-router.get('/', function(request, response, next) {
-  let page = request.query.page;
-  let limit = request.query.limit;
-  let movie_id = request.query.movie;
-  let sql = "SELECT * FROM screening WHERE movie_id = " + movie_id;
-
-  if(limit !== undefined && page !== undefined ){
-    sql += "ORDER BY id LIMIT " + limit + " OFFSET " + --page * limit;
-  }
-
-  db.query(sql, function (err, result) {
-    if (err){
-      response.status(HTTP_STATUS.INTERNAL_SERVER_ERROR);
-      response.json({'error': true, 'message': + err});
-      // return;
-      next();
-    }
-
-    response.json({
-      count: result.length,
-      data: result
-    });
-  });
-
-});
-
 
 /* GET screening by date. (GET specific screening) */
-router.get('/', function(request, response, next) {
+router.get('/:screeningDate', function(request, response, next) {
   let page = request.query.page;
   let limit = request.query.limit;
-  let date = request.query.screeningDate;
-  let sql = "SELECT * FROM screening WHERE DATE(screening_datetime) = " + date;
+  let screeningDate = request.params.screeningDate;
+
+  let sql = "SELECT * FROM screening WHERE DATE(screening_datetime) = '" + screeningDate + "' ";
 
   if(limit !== undefined && page !== undefined ){
-    sql += "ORDER BY id LIMIT " + limit + " OFFSET " + --page * limit;
+    sql += " ORDER BY id LIMIT " + limit + " OFFSET " + --page * limit;
   }
 
   db.query(sql, function (err, result) {
     if (err){
       response.status(HTTP_STATUS.INTERNAL_SERVER_ERROR);
       response.json({'error': true, 'message': + err});
-      // return;
       next();
     }
 
+
+    console.log("-----------------------------------------------------------------------SQL: ", sql, "-----------------------------------------------------------------");
     response.json({
       count: result.length,
       data: result
