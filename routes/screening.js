@@ -3,18 +3,16 @@ require('../http-status');
 let router = express.Router();
 let db = require('../database');
 
-/* GET screening by movie id. and company (GET specific screening) */
+/* GET screening by movie id. (GET specific screening) */
 router.get('/', function(request, response, next) {
   let page = request.query.page;
   let limit = request.query.limit;
   let movie = request.query.movie;
-  let company = request.query.company;
 
-  let sql = "SELECT * FROM screening s, cinema c ";
+  let sql = "SELECT s.id as screening_id, s.screening_datetime, s.url, s.details, c.cinema_name, c.company_name FROM screening s, cinema c ";
 
-  if(movie !== undefined && company !== undefined){
-    sql += "WHERE s.cinema_id = c.id AND movie_id = " + movie
-        + " AND c.company_name = '" + company + "' ";
+  if(movie !== undefined){
+    sql += "WHERE s.cinema_id = c.id AND movie_id = " + movie;
   }
 
   if(limit !== undefined && page !== undefined ){

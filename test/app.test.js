@@ -65,7 +65,7 @@ describe('Movies: ', () => {
 });
 
 
-/* Test the /GET screening by movie id and company name */
+/* Test the /GET screening by movie id: todo change that */
 describe('Screenings:', () => {
     // describe('get by id', () => {
     it('it should GET all screenings for a specific movie for a specific company', (done) => {
