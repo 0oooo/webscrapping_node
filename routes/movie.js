@@ -7,7 +7,7 @@ require('../http-status');
 
 
 
-/* GET movie listing. (GET All movies) */
+/* GET movie listing. (GET All movies) that have a name like .. or from today */
 router.get('/', function(request, response, next) {
   let page = request.query.page;
   let limit = request.query.limit;
@@ -60,26 +60,6 @@ router.get('/', function(request, response, next) {
 router.get('/:id', function(request, response, next) {
   let id = request.params.id;
   let sql = "SELECT * FROM movie WHERE id = " + id;
-
-  db.query(sql, function (err, result) {
-    if (err){
-      response.status(HTTP_STATUS.INTERNAL_SERVER_ERROR);
-      response.json({'error': true, 'message': + err});
-      // return;
-      next();
-    }
-
-    response.json({
-      count: result.length,
-      data: result
-    });
-  });
-});
-
-/* GET movie by name. (GET specific movie) */
-router.get('/:name', function(request, response, next) {
-  let name = request.params.name;
-  let sql = "SELECT * FROM movie WHERE name = " + name;
 
   db.query(sql, function (err, result) {
     if (err){
