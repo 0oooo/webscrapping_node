@@ -32,7 +32,7 @@ describe('app index route', () => {
 
 /* Test the /GET movie by id  */
 describe('Movies:', () => {
-  it('it should GET /id', (done) => {
+  it('it should GET a movie by id : /id', (done) => {
     let sql = "Select * from movie limit 1";
     db.query(sql, function(err, result){
       if(err){
@@ -42,9 +42,8 @@ describe('Movies:', () => {
       const id = result[0].id;
 
         chai.request(app)
-            .get('/movies/' + id)                   
+            .get('/movies/' + id)
             .end((err, res) => {
-                console.info(res);
                 res.should.have.status(200);
                 done();
             });
@@ -60,7 +59,6 @@ describe('Movies: ', () => {
         chai.request(app)
             .get('/movies?today=true&page=1&limit=12')
             .end((err, res) => {
-                console.info(res);
                 res.should.have.status(200);
                 res.body.should.be.a('Object');
                 res.body.should.have.property('count');
@@ -90,7 +88,6 @@ describe('Screenings:', () => {
         chai.request(app)
             .get('/screenings?movie=' + movie_id)
             .end((err, res) => {
-                console.info(res);
                 res.should.have.status(200);
                 res.body.should.be.a('Object');
                 res.body.should.have.property('count');
@@ -123,7 +120,6 @@ describe('Screenings:', () => {
             chai.request(app)
                 .get('/screenings/' + id)  //hard coded. Should change?
                 .end((err, res) => {
-                    console.info(res);
                     res.should.have.status(200);
                     res.body.should.be.a('Object');
                     res.body.should.have.property('count');
@@ -155,7 +151,6 @@ describe('Cinemas:', () => {
             chai.request(app)
                 .get('/cinemas?company=' + company)
                 .end((err, res) => {
-                    console.info(res);
                     res.should.have.status(200);
                     res.body.should.be.a('Object');
                     res.body.should.have.property('count');
