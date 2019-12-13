@@ -11,18 +11,25 @@ require('../http-status');
 router.get('/', function(request, response, next) {
   let page = request.query.page;
   let limit = request.query.limit;
+  let search = request.query.search;
   let today = request.query.today;
 
   let query = "SELECT * FROM movie ";
   let total = "SELECT COUNT(id) as total FROM movie ";
 
+  if(search){
+    total += " WHERE movie_name LIKE '%" + search + "%'";
+    query += " WHERE movie_name LIKE '%" + search + "%'";
+  }
+
   if(today){
-    total += " WHERE id IN (SELECT movie_id FROM screening WHERE Date(screening_datetime) = '" + date() + "') ";
-    query += " WHERE id IN (SELECT movie_id FROM screening WHERE Date(screening_datetime) = '" + date() + "') ";
+    const clause = search ? " AND" : " WHERE"
+    total += clause + " id IN (SELECT movie_id FROM screening WHERE Date(screening_datetime) = '" + date() + "') ";
+    query += clause + " id IN (SELECT movie_id FROM screening WHERE Date(screening_datetime) = '" + date() + "') ";
   }
 
   if(limit !== undefined && page !== undefined ){
-    query += "ORDER BY id LIMIT " + limit + " OFFSET " + --page * limit;
+    query += " ORDER BY id LIMIT " + limit + " OFFSET " + --page * limit;
   }
   console.log("My Query " + query);
 

@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="1d236341-7a3a-453c-a6df-1ceeb1fcbac1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/database.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/cinema.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/cinema.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/movie.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/movie.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/screening.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/screening.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/ticket.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/test/app.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/app.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,7 +58,8 @@
       <workItem from="1575821105516" duration="4789000" />
       <workItem from="1575923428233" duration="1306000" />
       <workItem from="1575997551464" duration="3339000" />
-      <workItem from="1576015905556" duration="1007000" />
+      <workItem from="1576015905556" duration="1011000" />
+      <workItem from="1576191780182" duration="2112000" />
     </task>
     <servers />
   </component>
@@ -61,6 +67,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="125" y="-775" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1576196899025">
+      <screen x="-573" y="-1057" width="1920" height="1057" />
+    </state>
+    <state x="125" y="-775" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1280.777/-573.-1057.1920.1057@-573.-1057.1920.1057" timestamp="1576196899025" />
     <state x="281" y="-886" width="667" height="714" key="find.popup" timestamp="1576000622613">
       <screen x="-345" y="-1057" width="1920" height="1057" />
     </state>

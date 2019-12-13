@@ -56,34 +56,6 @@ router.get('/:id', function(request, response, next) {
 
 });
 
-/* GET screening by date. (GET specific screening) */
-router.get('/:screeningDate', function(request, response, next) {
-  let page = request.query.page;
-  let limit = request.query.limit;
-  let screeningDate = request.params.screeningDate;
-
-  let sql = "SELECT * FROM screening WHERE DATE(screening_datetime) = '" + screeningDate + "' ";
-
-  if(limit !== undefined && page !== undefined ){
-    sql += " ORDER BY id LIMIT " + limit + " OFFSET " + --page * limit;
-  }
-
-  db.query(sql, function (err, result) {
-    if (err){
-      response.status(HTTP_STATUS.INTERNAL_SERVER_ERROR);
-      response.json({'error': true, 'message': + err});
-      next();
-    }
-
-
-    console.log("-----------------------------------------------------------------------SQL: ", sql, "-----------------------------------------------------------------");
-    response.json({
-      count: result.length,
-      data: result
-    });
-  });
-
-});
 
 
 module.exports = router;

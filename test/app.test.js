@@ -29,7 +29,6 @@ describe('app index route', () => {
 
 /* Test the /GET movie by id  */
 describe('Movies:', () => {
-    // describe('get by id', () => {
         it('it should GET /id', (done) => {
             chai.request(app)
                 .get('/movies/63')                    // hard coded. Should change?
@@ -44,7 +43,6 @@ describe('Movies:', () => {
 
 /* Test the /GET all today's movies */
 describe('Movies: ', () => {
-    // describe('get by id', () => {
     it('it should GET all movies from today', (done) => {
         chai.request(app)
             .get('/movies?today=true&page=1&limit=12')
@@ -65,12 +63,11 @@ describe('Movies: ', () => {
 });
 
 
-/* Test the /GET screening by movie id: todo change that */
+/* Test the /GET screening by movie id */
 describe('Screenings:', () => {
-    // describe('get by id', () => {
-    it('it should GET all screenings for a specific movie for a specific company', (done) => {
+    it('it should GET all screenings for a specific movie', (done) => {
         chai.request(app)
-            .get('/screenings?movie=35&company=Vue&limit=10&page=1')  //hard coded. Should change?
+            .get('/screenings?movie=38')  //hard coded. Should change?
             .end((err, res) => {
                 console.info(res);
                 res.should.have.status(200);
@@ -78,44 +75,12 @@ describe('Screenings:', () => {
                 res.body.should.have.property('count');
                 res.body.should.have.property('data');
                 res.body.data.should.be.a('array');
-                res.body.data[0].should.have.property('id');
-                res.body.data[0].should.have.property('movie_id');
-                res.body.data[0].should.have.property('cinema_id');
+                res.body.data[0].should.have.property('screening_id');
                 res.body.data[0].should.have.property('screening_datetime');
                 res.body.data[0].should.have.property('url');
                 res.body.data[0].should.have.property('details');
                 res.body.data[0].should.have.property('cinema_name');
-                res.body.data[0].should.have.property('address');
-                res.body.data[0].should.have.property('phone');
                 res.body.data[0].should.have.property('company_name');
-                res.body.data[0].should.have.property('cinema_url_name');
-                res.body.data[0].should.have.property('active');
-                done();
-            });
-    });
-});
-
-
-
-/* Test the /GET screening by date */
-describe('Screenings:', () => {
-    // describe('get by id', () => {
-    it('it should GET all screenings from specified date', (done) => {
-        chai.request(app)
-            .get('/screenings/2019-12-09?limit=10&page=1')  //hard coded. Should change?
-            .end((err, res) => {
-                console.info(res);
-                res.should.have.status(200);
-                res.body.should.be.a('Object');
-                res.body.should.have.property('count');
-                res.body.should.have.property('data');
-                res.body.data.should.be.a('array');
-                res.body.data[0].should.have.property('id');
-                res.body.data[0].should.have.property('movie_id');
-                res.body.data[0].should.have.property('cinema_id');
-                res.body.data[0].should.have.property('screening_datetime');
-                res.body.data[0].should.have.property('url');
-                res.body.data[0].should.have.property('details');
                 done();
             });
     });
@@ -124,10 +89,9 @@ describe('Screenings:', () => {
 
 /* Test the /GET screening by id */
 describe('Screenings:', () => {
-    // describe('get by id', () => {
     it('it should GET a screening with one specific id', (done) => {
         chai.request(app)
-            .get('/screenings/65')  //hard coded. Should change?
+            .get('/screenings/8996')  //hard coded. Should change?
             .end((err, res) => {
                 console.info(res);
                 res.should.have.status(200);
@@ -141,6 +105,29 @@ describe('Screenings:', () => {
                 res.body.data[0].should.have.property('screening_datetime');
                 res.body.data[0].should.have.property('url');
                 res.body.data[0].should.have.property('details');
+                done();
+            });
+    });
+});
+
+/* Test the /GET cinemas by company name */
+describe('Cinemas:', () => {
+    it('it should GET all the cinemas for given company', (done) => {
+        chai.request(app)
+            .get('/cinemas?company=Vue')  //hard coded. Should change?
+            .end((err, res) => {
+                console.info(res);
+                res.should.have.status(200);
+                res.body.should.be.a('Object');
+                res.body.should.have.property('count');
+                res.body.should.have.property('data');
+                res.body.data.should.be.a('array');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('cinema_name');
+                res.body.data[0].should.have.property('address');
+                res.body.data[0].should.have.property('phone');
+                res.body.data[0].should.have.property('company_name');
+                res.body.data[0].should.have.property('active');
                 done();
             });
     });
